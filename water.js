@@ -58,13 +58,33 @@
           bot.runloop();
           group = _group;
           return group.on_message(function(content, send, robot, message) {
-            var num = Math.random();
-            if (num > 0.9) {
-                return send(`赞美`);
-            } else if (num < 0.1) {
-                return send(`羡慕`);
-            } else {
+            // 提供一个简单的回复策略
+
+            // 赞美的对象
+            var user = message.from_user.nick;
+            var info = '';
+            if (user == 'Jcc') {
+                info = '金神';
+                log.info('[DEBUG here] yes');
+            } else if (user == 'CTW#Joker.reapor_yurnero') {
+                info = 'f少';
+            }
+
+            // 强制过滤规则
+            if (content.indexOf('qs') >= 0 || content.indexOf('钱') >= 0 || content.indexOf('说') >= 0 || content.indexOf('下面') >= 0) {
                 return;
+            }
+            
+            if (content.indexOf('赞美') >= 0 || content.indexOf('羡慕') >= 0) {
+                // 保持一定概率忽略消息
+                if (Math.random() < 0.2) {
+                    return;
+                }
+                if (Math.random() > 0.5) {
+                    return send(`赞美${info}`);
+                } else {
+                    return send(`羡慕${info}`);
+                }
             }
           });
         });
