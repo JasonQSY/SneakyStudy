@@ -58,9 +58,10 @@
           bot.runloop();
           group = _group;
           return group.on_message(function(content, send, robot, message) {
-            if (Math.random() > 0.9) {
+            var num = Math.random();
+            if (num > 0.9) {
                 return send(`赞美`);
-            } else if (Math.random() < 0.1) {
+            } else if (num < 0.1) {
                 return send(`羡慕`);
             } else {
                 return;
